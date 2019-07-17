@@ -1,0 +1,8 @@
+[submodule "sources/libx264"]
+	path = sources/libx264
+	url = http://git.videolan.org/git/x264
+	branch = master
+[submodule "sources/nv-codec-headers"]
+	path = sources/nv-codec-headers
+	url = https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
+	branch = master
