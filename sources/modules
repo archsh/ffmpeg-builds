@@ -1,0 +1,4 @@
+git submodule add -b master https://github.com/mstorsjo/fdk-aac libfdk_aac
+git submodule add -b master https://github.com/webmproject/libvpx.git libvpx
+git submodule add -b master http://git.videolan.org/git/x264 libx264
+git submodule add -b master https://git.videolan.org/git/ffmpeg/nv-codec-headers.git nv-codec-headers
