@@ -6,3 +6,7 @@
 	path = sources/nv-codec-headers
 	url = https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 	branch = master
+[submodule "sources/libfdk_aac"]
+	path = sources/libfdk_aac
+	url = https://github.com/mstorsjo/fdk-aac
+	branch = master
