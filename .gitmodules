@@ -10,3 +10,7 @@
 	path = sources/libfdk_aac
 	url = https://github.com/mstorsjo/fdk-aac
 	branch = master
+[submodule "sources/libvpx"]
+	path = sources/libvpx
+	url = https://github.com/webmproject/libvpx.git
+	branch = master
