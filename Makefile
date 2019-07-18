@@ -31,7 +31,7 @@ FFMPEG_OPTIONS += --disable-shared
 FFMPEG_OPTIONS += --enable-nonfree
 FFMPEG_OPTIONS += --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64
 #FFMPEG_OPTIONS += --enable-libmfx 
-CROSS_HOST = --host=aarch64-linux-gnu
+#CROSS_HOST = --host=aarch64-linux-gnu
 export PATH:=$(FFBIN):$(PATH)
 
 help:
@@ -39,7 +39,7 @@ help:
 	@echo "make build"
 initialize:
 	@mkdir -p $(FFSRC) $(FFBIN) $(FFBUILD)
-prepare: initialize nasm yasm libx264 libx265 libfdk_aac libmp3lame libopus libogg libvorbis libvpx nv-codec-headers
+prepair: initialize nasm yasm libx264 libx265 libfdk_aac libmp3lame libopus libogg libvorbis libvpx nv-codec-headers
 
 
 $(FFSRC)/nasm-2.13.03.tar.gz:
@@ -60,7 +60,8 @@ yasm: $(FFSRC)/yasm-1.3.0
 	@cd $< && ./configure --prefix="$(FFBUILD)" --bindir="$(FFBIN)" && make && make install
 
 $(FFSRC)/libx264:
-	@git clone --depth 1 http://git.videolan.org/git/x264 $(FFSRC)/libx264
+	@git submodule init sources/libx264
+	@git submodule update sources/libx264
 libx264: $(FFSRC)/libx264
 	@echo "Building $@ ..."
 	@cd $(FFSRC)/libx264 && PKG_CONFIG_PATH="$(FFBUILD)/lib/pkgconfig" ./configure $(CROSS_HOST) --disable-asm --prefix="$(FFBUILD)" --bindir="$(FFBIN)" --enable-pic --enable-static && make && make install
@@ -74,7 +75,8 @@ libx265: $(FFSRC)/x265_2.8/build/linux
 	@cd $< && cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX="$(FFBUILD)" -DENABLE_SHARED:bool=off ../../source && make && make install
 
 $(FFSRC)/libfdk_aac:
-	@git clone  --depth 1 https://github.com/mstorsjo/fdk-aac $(FFSRC)/libfdk_aac
+	@git submodule init sources/libfdk_aac
+	@git submodule update sources/libfdk_aac
 libfdk_aac: $(FFSRC)/libfdk_aac
 	@echo "Building $@ ..."
 	@cd $(FFSRC)/libfdk_aac && autoreconf -fiv && ./configure $(CROSS_HOST) --prefix="$(FFBUILD)" --disable-shared && make && make install
@@ -112,7 +114,8 @@ libvorbis: $(FFSRC)/libvorbis-1.3.5
 	@cd $< && ./configure $(CROSS_HOST) --prefix="$(FFBUILD)" --with-ogg="$(FFBUILD)" --disable-shared && make && make install
 
 $(FFSRC)/libvpx:
-	@git clone --depth 1 https://github.com/webmproject/libvpx.git $@
+	@git submodule init sources/libvpx
+	@git submodule update sources/libvpx
 libvpx: $(FFSRC)/libvpx
 	@echo "Building $@ ..."
 	@cd $< && ./configure $(CROSS_HOST) --prefix="$(FFBUILD)" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm && make && make install
